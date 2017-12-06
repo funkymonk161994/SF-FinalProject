@@ -1,21 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sf.vimo.com.sf.Scanner">
+    android:gravity="center"
+    tools:context=".Scanner">
 
-    <RelativeLayout
+    <EditText
+        android:id="@+id/et_message"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="SEND"
-        android:id="@+id/send"
-        android:layout_margin="120dp"/>
-    </RelativeLayout>
+        android:hint="@string/hint_message"/>
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/btn_write"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_message"
+        android:text="@string/message_write_tag"
+        style="@style/Widget.AppCompat.Button.Colored"/>
+
+    <Button
+        android:id="@+id/btn_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_write"
+        android:text="@string/message_read_tag"
+        style="@style/Widget.AppCompat.Button.Colored"/>
+</RelativeLayout>
