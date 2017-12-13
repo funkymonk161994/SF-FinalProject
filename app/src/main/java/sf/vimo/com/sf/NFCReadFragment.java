@@ -2,6 +2,7 @@ package sf.vimo.com.sf;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.tech.Ndef;
@@ -57,17 +58,17 @@ public class NFCReadFragment extends DialogFragment {
         mListener.onDialogDismissed();
     }
 
-    public void onNfcDetected(Ndef ndef){
+    public String onNfcDetected(Ndef ndef){
 
-        readFromNFC(ndef);
+        return readFromNFC(ndef);
     }
 
-    private void readFromNFC(Ndef ndef) {
-
+    private String readFromNFC(Ndef ndef) {
+        String message=null;
         try {
             ndef.connect();
             NdefMessage ndefMessage = ndef.getNdefMessage();
-            String message = new String(ndefMessage.getRecords()[0].getPayload());
+            message = new String(ndefMessage.getRecords()[0].getPayload());
             Log.d(TAG, "readFromNFC: "+message);
             mTvMessage.setText(message);
             ndef.close();
@@ -76,5 +77,6 @@ public class NFCReadFragment extends DialogFragment {
             e.printStackTrace();
 
         }
+        return message;
     }
 }
