@@ -41,10 +41,8 @@ public class Scanner extends Activity implements Listener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
-<<<<<<< HEAD
+
         Intent in = getIntent();
-=======
->>>>>>> 8bb8c2468e9e9962b076f1a3c85831e82a4529a6
 
         try {
             jsonObject = new JSONObject(in.getStringExtra("UserData"));
@@ -54,7 +52,7 @@ public class Scanner extends Activity implements Listener{
         }
         initViews();
         initNFC();
-        }
+    }
 
     private void initViews() {
 
