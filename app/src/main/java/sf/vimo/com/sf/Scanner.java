@@ -3,25 +3,28 @@ package sf.vimo.com.sf;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import org.json.JSONObject;
 
 
-public class Scanner extends Activity implements Listener {
+public class Scanner extends Activity implements Listener{
 
     public static final String TAG = Scanner.class.getSimpleName();
-
-    private EditText mEtMessage;
     private Button mBtWrite;
     private Button mBtRead;
 
@@ -31,20 +34,30 @@ public class Scanner extends Activity implements Listener {
     private boolean isDialogDisplayed = false;
     private boolean isWrite = false;
 
+    JSONObject jsonObject;
     private NfcAdapter mNfcAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
+<<<<<<< HEAD
+        Intent in = getIntent();
+=======
+>>>>>>> 8bb8c2468e9e9962b076f1a3c85831e82a4529a6
 
+        try {
+            jsonObject = new JSONObject(in.getStringExtra("UserData"));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         initViews();
         initNFC();
-    }
+        }
 
     private void initViews() {
 
-        mEtMessage = (EditText) findViewById(R.id.et_message);
         mBtWrite = (Button) findViewById(R.id.btn_write);
         mBtRead = (Button) findViewById(R.id.btn_read);
 
@@ -83,18 +96,6 @@ public class Scanner extends Activity implements Listener {
 
     }
 
-    @Override
-    public void onDialogDisplayed() {
-
-        isDialogDisplayed = true;
-    }
-
-    @Override
-    public void onDialogDismissed() {
-
-        isDialogDisplayed = false;
-        isWrite = false;
-    }
 
     @Override
     protected void onResume() {
@@ -109,6 +110,18 @@ public class Scanner extends Activity implements Listener {
         if(mNfcAdapter!= null)
             mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
 
+    }
+    @Override
+    public void onDialogDisplayed() {
+
+        isDialogDisplayed = true;
+    }
+
+    @Override
+    public void onDialogDismissed() {
+
+        isDialogDisplayed = false;
+        isWrite = false;
     }
 
     @Override
@@ -132,17 +145,22 @@ public class Scanner extends Activity implements Listener {
 
                 if (isWrite) {
 
-                    String messageToWrite = mEtMessage.getText().toString();
+                    String messageToWrite = jsonObject.toString();
+                    Log.d("Writing",messageToWrite);
                     mNfcWriteFragment = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
                     mNfcWriteFragment.onNfcDetected(ndef,messageToWrite);
 
                 } else {
 
                     mNfcReadFragment = (NFCReadFragment)getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
-                    mNfcReadFragment.onNfcDetected(ndef);
+                    String message = mNfcReadFragment.onNfcDetected(ndef);
+                    if(message!=null){
+                        Intent save = new Intent(Scanner.this, Results.class);
+                        save.putExtra("Read",message);
+                        startActivity(save);
+                    }
                 }
             }
         }
     }
-
 }
