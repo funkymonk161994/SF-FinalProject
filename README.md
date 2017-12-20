@@ -30,3 +30,14 @@ https://github.com/funkymonk161994/SF-FinalProject/issues
 
 Patches are encouraged, and may be submitted by forking this project and
 submitting a pull request through GitHub.
+
+
+Changelog
+
+0.1. Designed the activity screens and dataflow across each screens - 11/29/2017
+0.2. Added NFC read and write capability - 12/6/2017
+0.3. Tested to send and recieve feasable and relevant information - 12/9/2017
+1.0. Application with implemented features as described above - 12/11/2017
+1.1. Project Wiki tweaks and Readme Updates - 12/13/2017
+1.1.1. Bug Fixes in NFC Write - 12/15/2017
+1.1.2. Few UI updates for user to get feedback - 12/20/2017
