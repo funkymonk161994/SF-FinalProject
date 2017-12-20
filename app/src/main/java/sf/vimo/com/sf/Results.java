@@ -16,6 +16,7 @@ public class Results extends AppCompatActivity {
 
     Button addContact;
     ImageView imageView;
+    JSONObject jsonObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class Results extends AppCompatActivity {
         Log.d("Results","onCreate Started");
         Intent in = getIntent();
         TextView textView = findViewById(R.id.userName);
-        JSONObject jsonObject = new JSONObject();
+        jsonObject= new JSONObject();
         try{
             jsonObject = new JSONObject(in.getStringExtra("Read"));
             Log.d("Read Values",jsonObject.toString());
@@ -43,7 +44,12 @@ public class Results extends AppCompatActivity {
         addContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Contact Added: Alex Pichai",Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(getApplicationContext(), "Contact Added:" + jsonObject.getString("NAME"), Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
     }
